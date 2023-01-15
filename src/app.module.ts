@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import envSettings from './config/enviroment';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config/dist';
+import { DriverModule } from './modules/driver/driver.module';
 
 @Module({
   imports: [
@@ -13,7 +14,6 @@ import { ConfigService } from '@nestjs/config/dist';
       envFilePath: envSettings.envPath,
       isGlobal: true,
     }),
-    RiderModule,
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
@@ -29,7 +29,9 @@ import { ConfigService } from '@nestjs/config/dist';
         synchronize: true,
       }),
       inject: [ConfigService]
-    })
+    }),
+    RiderModule,
+    DriverModule
   ],
   controllers: [],
   providers: [],
