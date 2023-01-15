@@ -20,13 +20,17 @@ import { DriverModule } from './modules/driver/driver.module';
         type: 'postgres',
         host: configService.get('DB_HOST'),
         port: configService.get<number>('DB_PORT'),
-        username: configService.get('DB_USERNAME'),
+        username: configService.get('DB_USER'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
         entities: [
-          "src/db/**/entity/*.ts"
+          "/db/entities/**/*.entity.{ts,js}"
+        ],
+        migrations: [
+          "/db/migrations/*.{ts,js}"
         ],
         synchronize: true,
+        migrationsRun: true
       }),
       inject: [ConfigService]
     }),

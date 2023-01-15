@@ -1,10 +1,10 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class User {
+export class AppUser {
   @PrimaryGeneratedColumn({
     type: 'bigint',
-    name: 'user_id',
+    name: 'id',
   })
   id: number;
 
@@ -15,14 +15,14 @@ export class User {
   username: string;
 
   @Column({
-    name: 'type_user',
+    name: 'type',
     nullable: false,
     default: '',
   })
   type: string;
 
   @Column({
-    name: 'email_address',
+    name: 'email',
     nullable: false,
     default: '',
   })
