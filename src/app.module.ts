@@ -1,3 +1,4 @@
+import { WompiModule } from './modules/wompi/wompi.module';
 import { UserRepositoryModule } from './db/repository/user/user-repository.module';
 
 import { Module } from '@nestjs/common';
@@ -11,6 +12,7 @@ import { config } from './config/typeorm.config';
 
 @Module({
 	imports: [
+		WompiModule,
 		ConfigModule.forRoot({
 			envFilePath: envSettings.envPath,
 			isGlobal: true,
