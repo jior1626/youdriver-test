@@ -18,10 +18,9 @@ export class RiderController {
         return await this.riderService.getRiders();
     }
 
-    @Post()
-    savePaymentMethod(@Req() request: SavePaymentDto) {
+    @Post('create-token/cards')
+    createPaymentMethod(@Req() request: SavePaymentDto) {
         
     }
-
 
 }

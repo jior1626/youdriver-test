@@ -3,12 +3,12 @@ import envSettings from "./enviroment";
 
 export const config: TypeOrmModuleOptions = {
     type: "postgres",
-    host: envSettings.db_host,
-    port: envSettings.db_port,
-    username: envSettings.db_user,
-    password: envSettings.db_password,
-    database: envSettings.db_name,
-    synchronize: envSettings.db_synchronize,
+    host: process.env.DB_HOST,
+    port: parseInt(process.env.DB_PORT),
+    username: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    synchronize: Boolean(process.env.DB_SYNCHRONIZE),
     entities: [ 
         __dirname + '/../db/entities/*.{ts,js}'
     ],
