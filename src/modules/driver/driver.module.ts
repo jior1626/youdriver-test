@@ -5,14 +5,17 @@ https://docs.nestjs.com/modules
 
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from 'src/db/user-models/entity/User.entity';
+import { DriverService } from './driver.service';
+import { AppUser } from 'src/db/entities/user.entity';
 
 @Module({
     imports: [TypeOrmModule.forFeature(
-        [User]
+        [AppUser]
     )],
     controllers: [
         DriverController,],
-    providers: [],
+    providers: [
+        DriverService
+    ],
 })
 export class DriverModule { }

@@ -5,6 +5,7 @@ https://docs.nestjs.com/controllers#controllers
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { Req } from '@nestjs/common/decorators';
 import { Request } from 'express';
+import { SavePaymentDto } from 'src/db/dto/payment/save-payment.dto';
 import { RiderService } from './rider.service';
 
 @Controller('rider')
@@ -18,7 +19,7 @@ export class RiderController {
     }
 
     @Post()
-    savePaymentMethod(@Req() request: PaymentRequest) {
+    savePaymentMethod(@Req() request: SavePaymentDto) {
         
 
 

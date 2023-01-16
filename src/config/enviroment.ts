@@ -1,15 +1,19 @@
 import * as dotenv from 'dotenv'
-// import * as moment from 'moment-timezone';
 
 const envSettings = () => {
     const envPath = 'src/env/.env.' + process.env.NODE_ENV;
     dotenv.config({ path: envPath });
-    // const dbStringConnection = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true&w=majority`;    
     return { 
-        envPath, 
-        // dbStringConnection,
-        SECRET_KEY: process.env.SECRET_KEY,
-        // getCurrentDateTime: (date: Date) => moment.tz(date, 'America/Bogota').format('DD/MM/YYYY hh:mm a')
+        envPath,
+        db_type: process.env.DB_TYPE,
+        db_host: process.env.DB_HOST,
+        db_port: parseInt(process.env.DB_PORT),
+        db_user: process.env.DB_USER,
+        db_password: process.env.DB_PASSWORD,
+        db_name: process.env.DB_NAME,
+        db_synchronize: Boolean(process.env.DB_SYNCHRONIZE),
+        PUBLIC_KEY: process.env.PUBLIC_KEY,
+        PRIVATE_KEY: process.env.PRIVATE_KEY,
     }
 }
 
