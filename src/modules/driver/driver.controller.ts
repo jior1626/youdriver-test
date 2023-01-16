@@ -3,15 +3,16 @@ https://docs.nestjs.com/controllers#controllers
 */
 
 import { Controller, Get } from '@nestjs/common';
+import { UserDto } from 'src/db/dto/user/user.dto';
 import { DriverService } from './driver.service';
 
-@Controller('driver')
+@Controller('/api/drivers')
 export class DriverController {
 
     constructor(private readonly driverService: DriverService) {}
 
-    @Get()
-    getUsersIsDriver(): string {
-        return "this.driverService.getHello()";
+    @Get('list')
+    async getDrivers(): Promise<UserDto[]> {
+        return await this.driverService.getDrivers();
     }
 }

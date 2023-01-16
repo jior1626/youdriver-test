@@ -10,7 +10,6 @@ export class RiderService {
     constructor(
         private userRepoService: UserRepositoryService,
         private mapper: UserMapper
-    
     ) {}
 
     async getRiders(): Promise<UserDto[]>{
