@@ -1,7 +1,12 @@
+import { ApiProperty } from "@nestjs/swagger";
+
 export class SavePaymentDto {
+    @ApiProperty()
     client: {
+        id?: string,
         name: string
     };
+    @ApiProperty()
     payment_card: {
         number: string,
         cvc: string,

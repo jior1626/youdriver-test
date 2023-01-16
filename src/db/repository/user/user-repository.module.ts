@@ -20,6 +20,7 @@ import { UserEntity } from 'src/db/entities/user.entity';
     exports:[
         UserMapper,
         UserRepositoryService,
+        
     ]
 })
 export class UserRepositoryModule { }

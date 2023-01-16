@@ -5,16 +5,17 @@ https://docs.nestjs.com/modules
 */
 
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppUser } from 'src/db/entities/user.entity';
+import { UserRepositoryModule } from 'src/db/repository/user/user-repository.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature(
-        [AppUser]
-    )],
+    imports: [
+        UserRepositoryModule
+    ],
     controllers: [
-        RiderController,],
+        RiderController
+    ],
     providers: [
-        RiderService,],
+        RiderService
+    ],
 })
 export class RiderModule { }

@@ -1,5 +1,9 @@
+import { ApiProperty } from "@nestjs/swagger";
+
 export class PaymentResponse {
+    @ApiProperty()
     status: string;
+    @ApiProperty()
     data: {
         id: string,
         created_at: string,

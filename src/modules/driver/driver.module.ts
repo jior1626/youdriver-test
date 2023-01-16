@@ -4,16 +4,16 @@ https://docs.nestjs.com/modules
 */
 
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { DriverService } from './driver.service';
-import { AppUser } from 'src/db/entities/user.entity';
+import { UserRepositoryModule } from 'src/db/repository/user/user-repository.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature(
-        [AppUser]
-    )],
+    imports: [
+        UserRepositoryModule
+    ],
     controllers: [
-        DriverController,],
+        DriverController
+    ],
     providers: [
         DriverService
     ],
