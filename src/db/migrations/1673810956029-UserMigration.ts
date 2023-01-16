@@ -9,7 +9,7 @@ export class UserMigration1673810956029 implements MigrationInterface {
                 columns: [
                     {
                         name: 'id',
-                        type: 'int4',
+                        type: 'bigint',
                         isPrimary: true,
                         isGenerated: true,
                         generationStrategy: 'increment',
@@ -35,8 +35,8 @@ export class UserMigration1673810956029 implements MigrationInterface {
                         isNullable: false,
                     },
                 ],
-              }),
-              false,
+            }),
+            true,
         )
     }
 
