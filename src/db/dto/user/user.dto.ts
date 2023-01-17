@@ -1,8 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger";
 
 export class UserDto {
-    @ApiProperty()
-
+    @ApiProperty({
+        required: false
+    })
     id?: number;
 
     @ApiProperty()
@@ -16,13 +17,4 @@ export class UserDto {
 
     @ApiProperty()
     phone: string;
-
-    // constructor(id: number, username: string, type: string, email: string, phone: string) {
-    //     this.id = id;
-	// 	this.username = username;
-	// 	this.type = type;
-	// 	this.email = email;
-	// 	this.phone = phone;
-	// 	console.log('Created User Dto to ' + this.username);
-    // }
 }

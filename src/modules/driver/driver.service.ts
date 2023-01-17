@@ -15,4 +15,5 @@ export class DriverService {
         var users: UserEntity[] = await this.userRepoService.getAllUserIsDriver();
         return users.map(user => this.mapper.entityToDto(user));
     }
+    
 }

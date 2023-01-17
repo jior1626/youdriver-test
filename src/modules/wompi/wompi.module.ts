@@ -5,6 +5,11 @@ import { HttpModule } from '@nestjs/axios';
 @Module({
     imports: [HttpModule],
     controllers: [],
-    providers: [WompiService],
+    providers: [
+        WompiService
+    ],
+    exports: [WompiService]
 })
-export class WompiModule { }
+export class WompiModule {
+
+}

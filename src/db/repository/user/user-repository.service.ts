@@ -27,11 +27,11 @@ export class UserRepositoryService {
     }
 
     getAllUserIsRider(): Promise<UserEntity[]> {
-        return this.usersRepository.findBy({type: "rider"});
+        return this.usersRepository.findBy({type: "rider", });
     }
 
-    findUserById(id): Promise<UserEntity> {
-        return this.usersRepository.findOneByOrFail({id: id});
+    async findUserById(id): Promise<UserEntity> {
+        return await this.usersRepository.findOne({where: {id: id}, relations: ['methodPayments']});
     }
 
     createUser(userDto: UserDto): Promise<UserEntity> {

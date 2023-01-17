@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { MethodPaymentEntity } from './payment.entity';
 
 @Entity("app_user")
@@ -10,8 +10,11 @@ export class UserEntity {
 	})
 	id: number;
 
-	@OneToMany(type => MethodPaymentEntity, methodPayment => methodPayment.user)
-  	methodPayments: MethodPaymentEntity[];
+	@OneToMany(() => MethodPaymentEntity, (methodPayment: MethodPaymentEntity) => methodPayment.user)
+	methodPayments: MethodPaymentEntity[]
+
+	// @OneToMany(type => MethodPaymentEntity, methodPayment => methodPayment.user)
+  	// methodPayments: MethodPaymentEntity[];
 
 	@Column({
 		nullable: false,

@@ -2,34 +2,34 @@
 https://docs.nestjs.com/providers#services
 */
 
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { PaymentEntity } from 'src/db/entities/payment.entity';
+import { PaymentCardDto } from 'src/db/dto/payment/payment-card.dto';
+import { UserDto } from 'src/db/dto/user/user.dto';
+import { MethodPaymentEntity } from 'src/db/entities/payment.entity';
+import { UserEntity } from 'src/db/entities/user.entity';
 import { Repository } from 'typeorm';
-import { PaymentMapper } from './mapper/payment.mapper';
+import { MethodPaymentCardMapper } from './mapper/payment.mapper';
 
 @Injectable()
 export class PaymentRepositoryService { 
 
     constructor(
-        @InjectRepository(PaymentEntity)     
-        private paymentsRepository: Repository<PaymentEntity>,
-        private mapper: PaymentMapper
+        @InjectRepository(MethodPaymentEntity)     
+        private paymentsRepository: Repository<MethodPaymentEntity>,
+        private mapperPayment: MethodPaymentCardMapper
     ){}
 
-    getAllPayments(): Promise<PaymentEntity[]> {
+    getAllPayments(): Promise<MethodPaymentEntity[]> {
         return this.paymentsRepository.find();
     }
 
-    getAllPaymentIsDriver(): Promise<PaymentEntity[]> {
-        return this.paymentsRepository.findBy({type: "driver"});
-    }
-
-    getAllPaymentIsRider(): Promise<PaymentEntity[]> {
-        return this.paymentsRepository.findBy({type: "rider"});
-    }
-
-    findPaymentById(id): Promise<PaymentEntity> {
+    findPaymentById(id): Promise<MethodPaymentEntity> {
         return this.paymentsRepository.findOneByOrFail({id: id});
+    }
+
+    createMethodPayment(payment: PaymentCardDto, user: UserEntity): Promise<MethodPaymentEntity> {
+        const newData = this.mapperPayment.PaymentCardDtoToEntity(payment, user)
+        return this.paymentsRepository.save(newData);
     }
 }

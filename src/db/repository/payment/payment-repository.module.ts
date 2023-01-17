@@ -4,21 +4,21 @@ https://docs.nestjs.com/modules
 */
 
 import { Module } from '@nestjs/common';
-import { PaymentMapper } from './mapper/payment.mapper';
+import { MethodPaymentCardMapper } from './mapper/payment.mapper';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PaymentEntity } from 'src/db/entities/payment.entity';
+import { MethodPaymentEntity } from 'src/db/entities/payment.entity';
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([PaymentEntity])
+        TypeOrmModule.forFeature([MethodPaymentEntity])
     ],
     controllers: [],
     providers: [
-        PaymentMapper,
+        MethodPaymentCardMapper,
         PaymentRepositoryService,
     ],
     exports:[
-        PaymentMapper,
+        MethodPaymentCardMapper,
         PaymentRepositoryService,
         
     ]
