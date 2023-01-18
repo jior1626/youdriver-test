@@ -2,10 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { Logger } from '@nestjs/common/services';
 import { PaymentCardDto } from 'src/db/dto/payment/payment-card.dto';
 import { SavePaymentDto } from 'src/db/dto/payment/save-payment.dto';
-import { UserDto } from 'src/db/dto/user/user.dto';
+import { SaveTakeCardDto } from 'src/db/dto/user/SaveTakeCard.dto';
+import { UserDto } from 'src/db/dto/user/User.dto';
 import { UserEntity } from 'src/db/entities/user.entity';
-import { MethodPaymentCardMapper } from 'src/db/repository/payment/mapper/payment.mapper';
+import { MethodPaymentCardMapper } from 'src/db/repository/payment/mapper/payment-method.mapper';
 import { PaymentRepositoryService } from 'src/db/repository/payment/payment-repository.service';
+import { UserTransportationsMapper } from 'src/db/repository/user/mapper/user-transportations.mapper';
 import { UserMapper } from 'src/db/repository/user/mapper/user.mapper';
 import { UserRepositoryService } from 'src/db/repository/user/user-repository.service';
 import { WompiService } from '../wompi/wompi.service';
@@ -15,83 +17,30 @@ export class RiderService {
 
     constructor(
         private userRepoService: UserRepositoryService,
-        private paymentRepoService: PaymentRepositoryService,
-        private wompiService: WompiService,
-        private mapperUser: UserMapper,
-        private mapperPayment: MethodPaymentCardMapper,
-        private logger: Logger
+        private userTransportationsMapper: UserTransportationsMapper
     ) {}
 
-    async getRiders(): Promise<UserDto[]>{
-        var users: UserEntity[] = await this.userRepoService.getAllUserIsRider();
-        return users.map(user => this.mapperUser.entityToDto(user));
+    async getRiders() {
+        return await this.userRepoService.getAllUserIsRider();
     }
 
-    async createPaymentMethod(data: SavePaymentDto): Promise<PaymentCardDto> {
-        
-       
-        const user = await this.userRepoService.findUserById(data.user.id);
+    async saveTakeCard(body: SaveTakeCardDto) {
 
-        if (!user) {
-            throw new Error("User not exist.");
-        }
+        const driverRandom = await this.userRepoService.getRandomUserDriver();
 
-        // Create user if not exist
-        // if (!user) {
-        //     let newUser = new UserDto();
-        //     newUser.username = data.client.username;
-        //     newUser.type = data.client.type;
-        //     newUser.email = data.client.email;
-        //     newUser.phone = data.client.phone;
-        //     user = await this.userRepoService.createUser(newUser);
-        // }
+        body.driverId = driverRandom.id;
 
-        if(data.type_payment == "card") {
-            const methodPayments = user.methodPayments;
+        const driver = await this.userRepoService.findUserById(body.driverId);
 
-            if(methodPayments && methodPayments.length > 0 ) {
+        const rider = await this.userRepoService.findUserById(body.riderId);
 
-                const methodPayment = methodPayments.find(item => 
-                    item.number_card == data.payment_card.number && 
-                    item.cvc == data.payment_card.cvc &&
-                    item.exp_month == data.payment_card.exp_month &&
-                    item.exp_year == data.payment_card.exp_year
-                );
-               
-                const paymentCardDto: PaymentCardDto = this.mapperPayment.entityToPaymentCardDto(methodPayment, user);
-            
-                return paymentCardDto;
+        const userTransportationEntity = await this.userTransportationsMapper.UserTransportationDtoToUserTransportationEntity(body, rider, driver)
 
-            } else {
+        body.status = "start";
 
-                let paymentCardDto = new PaymentCardDto();
-                paymentCardDto.card_holder = user.username;
-                paymentCardDto.number = data.payment_card.number;
-                paymentCardDto.cvc = data.payment_card.cvc;
-                paymentCardDto.exp_month = data.payment_card.exp_month;
-                paymentCardDto.exp_year = data.payment_card.exp_year;
+        Logger.log(body, "body")
 
-                const savePaymentWompi = await this.wompiService.createMethodPaymentByCard(paymentCardDto).then(item => item);
-
-                if(savePaymentWompi.data.status == "CREATED") {
-                    paymentCardDto.token = savePaymentWompi.data.data.id;
-                } else {
-                    throw new Error("No se pudo tokenizar la tarjeta.");
-                }
-
-                const savePaymentDB = await this.paymentRepoService.createMethodPayment(paymentCardDto, user);
-
-                if (savePaymentDB) {
-                    return paymentCardDto;
-                } else {
-                    throw new Error("No se pudo crear el metodo de pago.");
-                    
-                }
-            }
-        
-        }
-       
+        await this.userRepoService.saveTakeCard(userTransportationEntity);
+    
     }
-
-
 }
