@@ -1,8 +1,8 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { UserEntity } from './user.entity';
 
-@Entity("app_user_method_payment")
-export class MethodPaymentEntity {
+@Entity("app_user_payment_sources")
+export class PaymentSourcesEntity {
 
 	@PrimaryGeneratedColumn({
 		type: 'bigint',
@@ -18,6 +18,7 @@ export class MethodPaymentEntity {
 		name: 'number_card',
 		nullable: false,
 		default: '',
+		unique: true,
 	})
 	number_card: string;
 

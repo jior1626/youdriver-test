@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 
-interface Data {
+class Data {
     id: string;
     created_at: string;
     brand: string;
@@ -15,7 +15,16 @@ interface Data {
     validity_ends_at: string
 }
 
-export interface PaymentSaveResponse {
+export class PaymentSaveResponse {
+    @ApiProperty()
     status: string;
+    @ApiProperty()
     data: Data
+}
+
+export class PaymentSourceResponse {
+    @ApiProperty()
+    metad: any;
+    @ApiProperty()
+    data: any
 }

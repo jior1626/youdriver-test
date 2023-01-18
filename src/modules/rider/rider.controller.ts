@@ -3,11 +3,8 @@ https://docs.nestjs.com/controllers#controllers
 */
 
 import { Body, Controller, Get, Post, Response, HttpStatus, HttpException } from '@nestjs/common';
-import { Req } from '@nestjs/common/decorators';
-import { Logger } from '@nestjs/common/services';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { SavePaymentDto } from 'src/db/dto/payment/save-payment.dto';
-import { UserDto } from 'src/db/dto/user/user.dto';
+import { SaveTakeCardDto } from 'src/db/dto/user/SaveTakeCard.dto';
 import { RiderService } from './rider.service';
 
 @ApiTags('/api/riders')
@@ -34,12 +31,10 @@ export class RiderController {
         }
     }
 
-    @Post('create-token/cards')
-    @ApiResponse({ status: 200, description: 'The record has been successfully created.'})
-    @ApiResponse({ status: 403, description: 'Forbidden.'})
-    async createPaymentMethod(@Response() res, @Body() request: SavePaymentDto) {
+    @Post('take-card')
+    async takeCard(@Body() body: SaveTakeCardDto, @Response() res){
         try {
-            const result = await this.riderService.createPaymentMethod(request);
+            const result = await this.riderService.saveTakeCard(body);
             res.status(HttpStatus.OK).json(result);
         } catch (error) {
             throw new HttpException(
@@ -51,5 +46,4 @@ export class RiderController {
             );
         }
     }
-
 }

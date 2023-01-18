@@ -7,6 +7,12 @@ export class UserDto {
     id?: number;
 
     @ApiProperty()
+    type_document: string;
+
+    @ApiProperty()
+    document: string;
+
+    @ApiProperty()
     username: string;
 
     @ApiProperty()

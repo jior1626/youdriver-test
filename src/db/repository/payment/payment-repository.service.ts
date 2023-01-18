@@ -5,11 +5,11 @@ https://docs.nestjs.com/providers#services
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PaymentCardDto } from 'src/db/dto/payment/payment-card.dto';
-import { UserDto } from 'src/db/dto/user/user.dto';
+import { UserDto } from 'src/db/dto/user/User.dto';
 import { MethodPaymentEntity } from 'src/db/entities/payment.entity';
 import { UserEntity } from 'src/db/entities/user.entity';
 import { Repository } from 'typeorm';
-import { MethodPaymentCardMapper } from './mapper/payment.mapper';
+import { MethodPaymentCardMapper } from './mapper/payment-method.mapper';
 
 @Injectable()
 export class PaymentRepositoryService { 

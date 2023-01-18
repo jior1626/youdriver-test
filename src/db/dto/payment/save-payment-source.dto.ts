@@ -2,15 +2,18 @@ import { ApiProperty } from "@nestjs/swagger";
 import { UserDto } from "../user/User.dto";
 import { PaymentCardDto } from "./payment-card.dto";
 
-export class SavePaymentDto {
+export class SavePaymentSourceDto {
 
     @ApiProperty()
-    user: UserDto;
+    type: string;
 
     @ApiProperty()
-    type_payment: string;
+    token: string;
 
     @ApiProperty()
-    payment_card: PaymentCardDto;
+    acceptance_token: string;
+
+    @ApiProperty()
+    customer_email: string;
 
 }

@@ -3,7 +3,7 @@ https://docs.nestjs.com/controllers#controllers
 */
 
 import { Controller, Get } from '@nestjs/common';
-import { UserDto } from 'src/db/dto/user/user.dto';
+import { UserDto } from 'src/db/dto/user/User.dto';
 import { DriverService } from './driver.service';
 
 @Controller('/api/drivers')

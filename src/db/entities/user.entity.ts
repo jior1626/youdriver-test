@@ -1,5 +1,6 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { MethodPaymentEntity } from './payment.entity';
+import { UsersTransportationsEntity } from './users-transportations.entity';
 
 @Entity("app_user")
 export class UserEntity {
@@ -12,9 +13,6 @@ export class UserEntity {
 
 	@OneToMany(() => MethodPaymentEntity, (methodPayment: MethodPaymentEntity) => methodPayment.user)
 	methodPayments: MethodPaymentEntity[]
-
-	// @OneToMany(type => MethodPaymentEntity, methodPayment => methodPayment.user)
-  	// methodPayments: MethodPaymentEntity[];
 
 	@Column({
 		nullable: false,
@@ -42,6 +40,12 @@ export class UserEntity {
 		default: '',
 	})
 	phone: string;
+
+	@OneToMany(() => UsersTransportationsEntity, (methodPayment: UsersTransportationsEntity) => methodPayment.rider)
+	riders_transportations: UsersTransportationsEntity[]
+
+	@OneToMany(() => UsersTransportationsEntity, (methodPayment: UsersTransportationsEntity) => methodPayment.driver)
+	drivers_transportation: UsersTransportationsEntity[]
 
 	@CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
     createDateTime: Date;

@@ -1,7 +1,7 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { PaymentCardDto } from "src/db/dto/payment/payment-card.dto";
 import { SavePaymentDto } from "src/db/dto/payment/save-payment.dto";
-import { UserDto } from "src/db/dto/user/user.dto";
+import { UserDto } from "src/db/dto/user/User.dto";
 import { MethodPaymentEntity } from "src/db/entities/payment.entity";
 import { UserEntity } from "src/db/entities/user.entity";
 
@@ -52,7 +52,4 @@ export class MethodPaymentCardMapper {
         methodPaymentEntity.token = paymentCard.token;
         return methodPaymentEntity;
     }
-
-
-
 }
