@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { UserDto } from 'src/db/dto/user/User.dto';
-import { UserEntity } from 'src/db/entities/user.entity';
+import { Logger } from '@nestjs/common/services';
+import { FinishTravelDto } from 'src/db/dto/user/FinishTravel.dto';
+import { UserTransportationsMapper } from 'src/db/repository/user/mapper/user-transportations.mapper';
 import { UserMapper } from 'src/db/repository/user/mapper/user.mapper';
 import { UserRepositoryService } from 'src/db/repository/user/user-repository.service';
 
@@ -8,12 +9,33 @@ import { UserRepositoryService } from 'src/db/repository/user/user-repository.se
 export class DriverService {
     constructor(
         private userRepoService: UserRepositoryService,
-        private mapper: UserMapper
+        private mapper: UserMapper,
+        private mapperUserTransportation: UserTransportationsMapper
     ) {}
 
-    async getDrivers(): Promise<UserDto[]>{
-        var users: UserEntity[] = await this.userRepoService.getAllUserIsDriver();
-        return users.map(user => this.mapper.entityToDto(user));
+    async getDrivers(){
+        return await this.userRepoService.getAllUserIsDriver();
+    }
+
+    async finishTravel(body: FinishTravelDto) {
+
+        const travel = await this.userRepoService.findTravel(body.id);
+
+        if(travel) {
+            const totalByMinutes = body.minutes_traveled * 200;
+            const totalByKilometers = body.kilometers_traveled * 1000;
+            const total_amount = totalByMinutes + totalByKilometers + body.base_rate;
+
+            body.total_amount = total_amount;
+
+            await this.userRepoService.finishTravel(body);
+
+            return await body;
+
+        } else {
+            throw new Error("Travel not exist.");
+        }
+      
     }
     
 }

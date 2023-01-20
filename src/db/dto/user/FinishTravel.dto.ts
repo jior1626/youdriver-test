@@ -1,40 +1,41 @@
 import { ApiProperty } from "@nestjs/swagger";
 
-export class PaymentCardDto {
-
-    @ApiProperty({
-        required: false
-    })
-    id?: number;
+export class FinishTravelDto {
 
     @ApiProperty({
         required: true
     })
-    number: string;
+    id: number;
 
     @ApiProperty({
         required: true
     })
-    cvc: string;
-
+    kilometers_traveled: number;
+    
     @ApiProperty({
         required: true
     })
-    exp_month: string;
-
+    minutes_traveled: number;
+    
     @ApiProperty({
         required: true
     })
-    exp_year: string;
+    status: string;
+    
+    @ApiProperty({
+        required: true
+    })
+    base_rate: number;
+    
+    @ApiProperty({
+        required: true
+    })
+    destiny: string;
 
     @ApiProperty({
-        required: false
+        required: false,
+        default: 0
     })
-    card_holder: string
-
-    @ApiProperty({
-        nullable: true
-    })
-    token?: string
+    total_amount: number;
 
 }

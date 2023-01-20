@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { PaymentSourcesEntity } from './payment-source.entity';
 import { UserEntity } from './user.entity';
 
 @Entity("app_user_method_payment")
@@ -11,7 +12,6 @@ export class MethodPaymentEntity {
 	id: number;
 
 	@ManyToOne(() => UserEntity, (user: UserEntity) => user.methodPayments)
-	@JoinColumn({name: 'user_id'})
     user: UserEntity;
 
 	@Column({
@@ -48,6 +48,9 @@ export class MethodPaymentEntity {
 		default: '',
 	})
 	token: string;
+
+	@OneToOne(() => UserEntity, (user: UserEntity) => user.methodPayments)
+    paymentSource: PaymentSourcesEntity;
 
     @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
     createDateTime: Date;

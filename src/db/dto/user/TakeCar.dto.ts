@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 
-export class SaveTakeCardDto {
+export class TakeCarDto {
     @ApiProperty({
         required: false
     })
@@ -27,18 +27,28 @@ export class SaveTakeCardDto {
         required: false,
         default: "0"
     })
-    kilometers_traveled: string;
+    kilometers_traveled: number;
 
     @ApiProperty({
         required: false,
         default: "0"
     })
-    minutes_traveled: string;
+    minutes_traveled: number;
 
     @ApiProperty({
         required: false,
-        default: "0"
+        default: 3500
     })
-    base_rate: string;
+    base_rate: number;
+
+    @ApiProperty({
+        required: false
+    })
+    total_amount: number;
+
+    @ApiProperty({
+        required: false
+    })
+    destiny: string;
 
 }

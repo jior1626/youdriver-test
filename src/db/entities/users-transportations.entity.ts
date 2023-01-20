@@ -36,21 +36,33 @@ export class UsersTransportationsEntity {
 
     @Column({
 		nullable: true,
-		default: '',
+		default: 0,
 	})
-    kilometers_traveled: string;
+    kilometers_traveled: number;
 
     @Column({
 		nullable: true,
-		default: '',
+		default: 0,
 	})
-    minutes_traveled: string;
+    minutes_traveled: number;
 
     @Column({
 		nullable: true,
+		default: 3500,
+	})
+    base_rate: number;
+
+	@Column({
+		nullable: true,
 		default: '',
 	})
-    base_rate: string;
+    destiny: string;
+
+	@Column({
+		nullable: true,
+		default: 0,
+	})
+    total_amount: number;
 
 	@CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
     createDateTime: Date;

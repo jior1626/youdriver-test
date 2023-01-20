@@ -2,9 +2,10 @@
 https://docs.nestjs.com/providers#services
 */
 
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { SaveTakeCardDto } from 'src/db/dto/user/SaveTakeCard.dto';
+import { FinishTravelDto } from 'src/db/dto/user/FinishTravel.dto';
+import { TakeCarDto } from 'src/db/dto/user/TakeCar.dto';
 import { UserDto } from 'src/db/dto/user/User.dto';
 
 import { UserEntity } from 'src/db/entities/user.entity';
@@ -20,7 +21,6 @@ export class UserRepositoryService {
         private usersRepository: Repository<UserEntity>,
         @InjectRepository(UsersTransportationsEntity)     
         private usersTransportationRepository: Repository<UsersTransportationsEntity>,
-        private mapper: UserMapper
     ){}
 
     getAllUsers(): Promise<UserEntity[]> {
@@ -56,8 +56,16 @@ export class UserRepositoryService {
         return this.usersRepository.save(data);
     }
 
-    saveTakeCard(data) {
+    saveTakeCard(data: UsersTransportationsEntity) {
         return this.usersTransportationRepository.save(data);
+    }
+
+    findTravel(id) {
+        return this.usersTransportationRepository.findOneBy({id: id});
+    }
+
+    finishTravel(data: FinishTravelDto){
+        return this.usersTransportationRepository.update({id: data.id}, data);
     }
 
     async getRandomUserDriver(): Promise<UserEntity>  {

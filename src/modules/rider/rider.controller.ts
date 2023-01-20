@@ -4,7 +4,7 @@ https://docs.nestjs.com/controllers#controllers
 
 import { Body, Controller, Get, Post, Response, HttpStatus, HttpException } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { SaveTakeCardDto } from 'src/db/dto/user/SaveTakeCard.dto';
+import { TakeCarDto } from 'src/db/dto/user/TakeCar.dto';
 import { RiderService } from './rider.service';
 
 @ApiTags('/api/riders')
@@ -31,8 +31,8 @@ export class RiderController {
         }
     }
 
-    @Post('take-card')
-    async takeCard(@Body() body: SaveTakeCardDto, @Response() res){
+    @Post('take-car')
+    async takeCard(@Body() body: TakeCarDto, @Response() res){
         try {
             const result = await this.riderService.saveTakeCard(body);
             res.status(HttpStatus.OK).json(result);

@@ -7,6 +7,9 @@ export class UserDto {
     id?: number;
 
     @ApiProperty()
+    type: string;
+
+    @ApiProperty()
     type_document: string;
 
     @ApiProperty()
@@ -16,11 +19,26 @@ export class UserDto {
     username: string;
 
     @ApiProperty()
-    type: string;
+    address1?: string;
+
+    @ApiProperty({
+        required: false
+    })
+    address2?: string;
+
+    @ApiProperty()
+    country?: string;
+
+    @ApiProperty()
+    region?: string;
+
+    @ApiProperty()
+    city?: string;
 
     @ApiProperty()
     email: string;
 
     @ApiProperty()
     phone: string;
+    
 }

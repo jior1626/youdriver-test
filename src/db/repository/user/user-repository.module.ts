@@ -23,7 +23,7 @@ import { UserTransportationsMapper } from './mapper/user-transportations.mapper'
     exports:[
         UserMapper,
         UserRepositoryService,
-        
+        UserTransportationsMapper,
     ]
 })
 export class UserRepositoryModule { }

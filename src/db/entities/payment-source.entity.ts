@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { MethodPaymentEntity } from './payment.entity';
 import { UserEntity } from './user.entity';
 
 @Entity("app_user_payment_sources")
@@ -10,45 +11,15 @@ export class PaymentSourcesEntity {
 	})
 	id: number;
 
-	@ManyToOne(() => UserEntity, (user: UserEntity) => user.methodPayments)
-	@JoinColumn({name: 'user_id'})
-    user: UserEntity;
-
-	@Column({
-		name: 'number_card',
-		nullable: false,
-		default: '',
-		unique: true,
-	})
-	number_card: string;
+	@OneToOne(() => MethodPaymentEntity, (payment: MethodPaymentEntity) => payment.paymentSource)
+    payment: MethodPaymentEntity;
 
     @Column({
-		name: 'exp_month',
+		name: 'acceptance_token',
 		nullable: false,
 		default: '',
 	})
-	exp_month: string;
-
-    @Column({
-		name: 'exp_year',
-		nullable: false,
-		default: '',
-	})
-	exp_year: string;
-
-    @Column({
-		name: 'cvc',
-		nullable: false,
-		default: '',
-	})
-	cvc: string;
-
-    @Column({
-		name: 'token',
-		nullable: true,
-		default: '',
-	})
-	token: string;
+	acceptance_token: string;
 
     @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
     createDateTime: Date;

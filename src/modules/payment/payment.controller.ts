@@ -70,4 +70,22 @@ export class PaymentController {
         }
     }
 
+    @Post('/pay-transportation')
+    async payTransportation(@Response() res, @Body() request: SavePaymentDto) {
+        try {
+            const result = await this.paymentService.payTransportation(request);
+            res.status(HttpStatus.OK).json(result);
+        } catch (error) {
+            throw new HttpException(
+                {
+                  status: HttpStatus.FORBIDDEN,
+                  error: error.message,
+                },
+                HttpStatus.FORBIDDEN,
+            );
+        }
+    }
+
+
+
 }
